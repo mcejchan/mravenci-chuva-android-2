@@ -1,0 +1,44 @@
+{
+  "name": "android-expo-dev-fixed",
+  "build": {
+    "dockerfile": "Dockerfile.fixed",
+    "context": "."
+  },
+  "remoteUser": "vscode",
+  "runArgs": [
+    "--add-host=host.docker.internal:host-gateway"
+  ],
+  "mounts": [
+    "source=android-sdk,target=/opt/android-sdk,type=volume",
+    "source=${localWorkspaceFolder}/.gradle,target=/home/vscode/.gradle,type=bind",
+    "source=${localWorkspaceFolder}/.android,target=/home/vscode/.android,type=bind"
+  ],
+  "containerEnv": {
+    "ANDROID_SDK_ROOT": "/opt/android-sdk",
+    "ANDROID_HOME": "/opt/android-sdk",
+    "ADB_SERVER_SOCKET": "tcp:host.docker.internal:5037",
+    "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-arm64"
+  },
+  "postCreateCommand": "bash .devcontainer/scripts/setup-android-sdk-fixed.sh && curl -fsSL claude.ai/install.sh | bash && echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc && echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.profile",
+  "forwardPorts": [
+    8081,
+    19000,
+    19001,
+    19002
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "xabikos.JavaScriptSnippets",
+        "ms-vscode.vscode-typescript-next"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}
