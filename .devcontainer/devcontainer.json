@@ -1,8 +1,10 @@
 {
   "name": "mravenci-chuva-android-amd64",
-  "image": "mravenci-chuva-android-amd64:latest",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
   "runArgs": [
-    "--platform=linux/amd64",
     "--add-host=host.docker.internal:host-gateway"
   ],
   "remoteUser": "vscode",
@@ -17,7 +19,7 @@
     "ADB_SERVER_SOCKET": "tcp:host.docker.internal:5037",
     "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
   },
-  "postCreateCommand": "bash .devcontainer/scripts/setup-android-sdk.sh && curl -fsSL claude.ai/install.sh | bash && echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc && echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.profile",
+  "postCreateCommand": "bash .devcontainer/scripts/setup-android-sdk.sh && curl -fsSL claude.ai/install.sh | bash && grep -qxF 'export PATH=$HOME/.local/bin:$PATH' ~/.bashrc || echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc && grep -qxF 'export PATH=$HOME/.local/bin:$PATH' ~/.profile || echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.profile",
   "forwardPorts": [
     8081,
     19000,

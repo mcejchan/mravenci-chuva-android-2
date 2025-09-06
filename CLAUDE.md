@@ -45,8 +45,11 @@ adb devices
 npm install
 
 # Start Expo development server
-npx expo start --tunnel    # for remote access
-npx expo start              # for local network
+npx expo start --tunnel              # for remote access
+npx expo start                       # for local network
+
+# Optimized startup (recommended for containers)
+EXPO_NO_MDNS=1 npx expo start --host=localhost
 
 # EAS Build (cloud builds)
 eas build --platform android
@@ -85,6 +88,12 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 - Ensure host ADB server is running: `adb kill-server && adb start-server` (on host)
 - Check firewall isn't blocking port 5037
 - Verify container can reach host: `ping host.docker.internal`
+
+### Expo/Metro Connection Issues
+- **Recommended approach**: Use `EXPO_NO_MDNS=1 npx expo start --host=localhost`
+- **Why**: Disables mDNS discovery, reduces "ghost" detection attempts
+- **Alternative**: Use `--tunnel` for external network access
+- **ADB reverse**: Container relies on `adb reverse` for device connectivity (preferred over network discovery)
 
 ### SDK Issues
 - SDK components are installed to `/opt/android-sdk` via Docker volume `android-sdk-amd64`

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Install Android commandline-tools and base packages inside the container.
-# Modified version that skips platform-tools installation to use native ARM64 ADB
+# AMD64 version that installs platform-tools and uses native AMD64 ADB
 set -euo pipefail
 
 # Debug: Print environment
@@ -50,10 +50,11 @@ LICENSES_EXIT_CODE=$?
 set -e
 echo "License acceptance completed (exit code: $LICENSES_EXIT_CODE)"
 
-echo "==> Installing build-tools and platforms (skipping platform-tools - using native ADB)..."
+echo "==> Installing build-tools and platforms..."
 sudo "${SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" \
-  "platforms;android-35" \
-  "build-tools;35.0.0" \
+  "platform-tools" \
+  "platforms;android-36" \
+  "build-tools;36.0.0" \
   "extras;google;m2repository" \
   "extras;android;m2repository"
 
@@ -64,5 +65,5 @@ echo "==> ADB configuration for host connectivity..."
 echo "export ADB_SERVER_SOCKET=tcp:host.docker.internal:5037" >> ~/.bashrc
 
 echo "==> Done. ANDROID_SDK_ROOT=${SDK_ROOT}"
-echo "==> Using native ARM64 ADB from /usr/bin/adb"
+echo "==> Using native AMD64 ADB from /usr/bin/adb"
 echo "==> ADB will connect to host via ADB_SERVER_SOCKET"
