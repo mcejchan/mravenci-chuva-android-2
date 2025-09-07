@@ -1,0 +1,67 @@
+Navrhujeme jednoduchou appku na android, která bude sloužit pro dotazy v přirozeném jazyce nad databází knížek pro děti. Jednak tam budou uložená běžná metadata a pak také komentář ke knížce a její zkrácený obsah a další povídání o ní. Tedy něco by šlo udělat přes sql dotaz fulltextem, ale hlavně využijme i LLM pro formulaci odpovědí a analýzu delších uložených textů. Nyní navrhujeme pouze design appky, backend budeme dělat zvlášť. Vycházíme z již hotového webu, který máme zde https://mravencichuva.cz/. Zde je příklad záznamu jedné knihy https://mravencichuva.cz/olivie-si-vyskakuje/
+
+Klíčové prvky designu:
+
+Jediná obrazovka - Vše se děje na jednom místě, žádná navigace ani složité menu
+Vyhledávací pole jako hlavní prvek - Centrální umístění, velké a přívětivé
+Okamžité výsledky - Objeví se přímo pod vyhledáváním, plynulá animace
+AI vysvětlení - LLM vysvětlí, proč knihu doporučuje
+Relevance skóre - Vizuální indikátor, jak moc kniha odpovídá dotazu
+
+UX vlastnosti:
+
+Žádné filtry ani kategorie - AI vše vyřeší z přirozeného dotazu
+Hlasový vstup - Tlačítko mikrofonu pro rychlé dotazy
+RetryMContinueEditTechnické detaily implementace:
+Architektura aplikace:
+
+Single Activity Architecture - Celá aplikace běží v jedné aktivitě
+Compose UI - Moderní deklarativní UI framework pro Android
+MVVM pattern - ViewModel pro správu stavu a komunikaci s backendem
+
+Komunikace s backendem:
+kotlin// Příklad API volání
+data class SearchRequest(
+    val query: String,
+    val voiceInput: Boolean = false
+)
+
+data class SearchResponse(
+    val interpretation: String,  // Co AI pochopila z dotazu
+    val books: List<Book>,
+    val relevanceScores: Map<String, Float>
+)
+Stavy aplikace:
+
+Idle - Výchozí stav s prázdným vyhledávacím polem
+Listening - Při hlasovém vstupu
+Loading - Během zpracování dotazu
+Results - Zobrazení výsledků s animací zdola nahoru
+Error - Elegantní error handling
+
+Animace a přechody:
+
+Elastic spring animation pro objevení výsledků
+Shared element transition při otevření detailu knihy
+Pulse animace u mikrofonu během nahrávání
+Fade in/out pro změny obsahu
+
+Optimalizace pro rychlost:
+
+Debouncing vyhledávání (500ms po ukončení psaní)
+Cachování posledních 10 dotazů
+Lazy loading obrázků obálek
+Předběžné načítání při scrollování
+
+Přístupnost:
+
+TalkBack podpora pro nevidomé
+Minimální kontrast 4.5:1 pro text
+Dostatečně velké touch targets (min 48dp)
+Podpora tmavého režimu (následuje systémové nastavení)
+
+Offline funkčnost:
+
+Lokální cache nejčastějších dotazů
+Queue systém pro dotazy bez připojení
+Informativní offline stav s možností opakování

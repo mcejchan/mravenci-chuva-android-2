@@ -11,7 +11,10 @@
   "mounts": [
     "source=android-sdk-amd64,target=/opt/android-sdk,type=volume",
     "source=${localWorkspaceFolder}/.gradle,target=/home/vscode/.gradle,type=bind",
-    "source=${localWorkspaceFolder}/.android,target=/home/vscode/.android,type=bind"
+    "source=${localWorkspaceFolder}/.android,target=/home/vscode/.android,type=bind",
+    "type=volume,source=hello_world_node_modules,target=/workspaces/mravenci-chuva-android-amd64/hello-world/node_modules",
+    "type=volume,source=expo_cache,target=/home/vscode/.cache/expo",
+    "type=volume,source=metro_cache,target=/home/vscode/.cache/metro"
   ],
   "containerEnv": {
     "ANDROID_SDK_ROOT": "/opt/android-sdk",
@@ -19,7 +22,7 @@
     "ADB_SERVER_SOCKET": "tcp:host.docker.internal:5037",
     "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
   },
-  "postCreateCommand": "bash .devcontainer/scripts/setup-android-sdk.sh && curl -fsSL claude.ai/install.sh | bash && grep -qxF 'export PATH=$HOME/.local/bin:$PATH' ~/.bashrc || echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc && grep -qxF 'export PATH=$HOME/.local/bin:$PATH' ~/.profile || echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.profile",
+  "postCreateCommand": "bash .devcontainer/scripts/setup-android-sdk.sh && sudo mkdir -p /home/vscode/.cache && sudo chown vscode:vscode /home/vscode/.cache && curl -fsSL claude.ai/install.sh | bash && grep -qxF 'export PATH=$HOME/.local/bin:$PATH' ~/.bashrc || echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc && grep -qxF 'export PATH=$HOME/.local/bin:$PATH' ~/.profile || echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.profile",
   "forwardPorts": [
     8081,
     19000,
