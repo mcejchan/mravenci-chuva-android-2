@@ -1,0 +1,9 @@
+appId: host.exp.exponent
+---
+- launchApp:
+    appId: "host.exp.exponent"
+- tapOn: "Enter URL manually"
+- inputText: "exp://127.0.0.1:19000"
+- tapOn: "Connect"
+- waitForAnimationToEnd
+- assertVisible: "Hello World! 🌍"

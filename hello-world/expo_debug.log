@@ -1,0 +1,55 @@
+2025-09-07T22:21:09.791Z expo:telemetry Switching strategy from detached to instant
+2025-09-07T22:21:10.034Z expo:telemetry Recording 1 event(s)
+2025-09-07T22:21:10.114Z expo:env /workspaces/mravenci-chuva-android-amd64/hello-world/.env does not exist, skipping this env file
+2025-09-07T22:21:10.115Z expo:env /workspaces/mravenci-chuva-android-amd64/hello-world/.env.development does not exist, skipping this env file
+2025-09-07T22:21:10.115Z expo:env /workspaces/mravenci-chuva-android-amd64/hello-world/.env.local does not exist, skipping this env file
+2025-09-07T22:21:10.116Z expo:env /workspaces/mravenci-chuva-android-amd64/hello-world/.env.development.local does not exist, skipping this env file
+Starting project at /workspaces/mravenci-chuva-android-amd64/hello-world
+2025-09-07T22:21:11.277Z expo:start:server:devServer Stopping dev server (bundler: metro)
+2025-09-07T22:21:11.277Z expo:start:server:devServer Stopped dev server (bundler: metro)
+2025-09-07T22:21:11.293Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+
+Expo Metro config:
+- Version: 0.20.17
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /workspaces/mravenci-chuva-android-amd64/hello-world/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: null
+
+2025-09-07T22:21:13.177Z expo:metro:withMetroResolvers Appending 8 custom resolvers to Metro config. (has custom resolver: false)
+2025-09-07T22:21:13.466Z expo:start:server:urlCreator URL: http://127.0.0.1:8081
+Starting Metro Bundler
+2025-09-07T22:21:13.911Z expo:start:server:middleware:serveStatic Serving static files from: /workspaces/mravenci-chuva-android-amd64/hello-world/public
+2025-09-07T22:21:13.929Z expo:start:server:urlCreator URL: exp://127.0.0.1:8081
+warning: Bundler cache is empty, rebuilding (this may take a minute)
+2025-09-07T22:21:14.056Z expo:start:server:developmentSession Development session will not ping because the user is not authenticated and there are no devices.
+2025-09-07T22:21:14.065Z expo:start:server:metro:waitForTypescript Watching file changes: [
+  '/workspaces/mravenci-chuva-android-amd64/hello-world/.env.development.local',
+  '/workspaces/mravenci-chuva-android-amd64/hello-world/.env.local',
+  '/workspaces/mravenci-chuva-android-amd64/hello-world/.env.development',
+  '/workspaces/mravenci-chuva-android-amd64/hello-world/.env'
+]
+2025-09-07T22:21:14.078Z expo:doctor:typescriptSupport Ensuring TypeScript support is setup
+2025-09-07T22:21:14.168Z expo:start:server:metro:metroWatchTypeScriptFiles Waiting for TypeScript files to be added to the project...
+2025-09-07T22:21:14.241Z expo:doctor:dependencies:bundledNativeModules Fetching bundled native modules from the server...
+2025-09-07T22:21:14.696Z expo:doctor:dependencies:validate Checking dependencies for 53.0.0: {
+  expo: '~53.0.22',
+  'expo-status-bar': '~2.2.3',
+  react: '19.0.0',
+  'react-native': '0.79.5',
+  '@babel/core': '^7.20.0'
+}
+2025-09-07T22:21:14.697Z expo:doctor:dependencies:validate Comparing known versions: [ 'expo', 'expo-status-bar', 'react', 'react-native', '@babel/core' ]
+2025-09-07T22:21:14.698Z expo:doctor:dependencies:validate Skipping packages that cannot be versioned automatically: []
+2025-09-07T22:21:14.709Z expo:doctor:dependencies:validate Package versions: {
+  expo: '53.0.22',
+  'expo-status-bar': '2.2.3',
+  react: '19.0.0',
+  'react-native': '0.79.5',
+  '@babel/core': '7.28.4'
+}
+2025-09-07T22:21:14.737Z expo:doctor:dependencies:validate Incorrect dependencies: []
+Waiting on http://localhost:8081
+Logs for your project will appear below.

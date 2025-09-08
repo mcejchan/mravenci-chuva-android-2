@@ -4,7 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This repository contains a pre-configured Dev Container setup for Android development using Expo/React Native with Java/Kotlin support. **This version is specifically configured to run on AMD64 architecture via Rosetta on Apple Silicon Macs** to ensure full compatibility with Android SDK tools.
+This repository contains a **pure Expo Go development environment** optimized for rapid mobile app prototyping. **No native builds required** - the Expo Go app on your device handles all native code execution.
+
+### Current Architecture: Expo Go Only
+- **Development Model**: JavaScript/TypeScript code runs in Expo Go app
+- **No Native Builds**: No Gradle, no Kotlin compilation, no APK generation needed  
+- **Hot Reload**: Instant code updates via network connection to development server
+- **Cross-Platform**: Same codebase for iOS and Android via Expo Go
 
 ## Key Architecture Components
 
@@ -17,111 +23,101 @@ This repository contains a pre-configured Dev Container setup for Android develo
 - **Persistent Storage**: Android SDK stored in Docker volume `android-sdk-amd64` (separate from ARM64 version)
 
 ### Environment Variables
-- `ANDROID_SDK_ROOT` and `ANDROID_HOME`: `/opt/android-sdk`
-- `ADB_SERVER_SOCKET`: `tcp:host.docker.internal:5037` (connects to host ADB)
-- `JAVA_HOME`: `/usr/lib/jvm/java-17-openjdk-amd64` (AMD64 Java installation)
+- `JAVA_HOME`: `/usr/lib/jvm/java-17-openjdk-amd64` (for Expo CLI tools)
 
 ### Port Forwarding
-- `8081`: Metro bundler (React Native)
 - `19000-19002`: Expo development server
 
 ## Common Development Commands
 
-### Android SDK Management
+### Expo Go Development
 ```bash
-# List available packages
-sdkmanager --list
+# Navigate to app directory
+cd hello-world
 
-# Install additional SDK components
-sdkmanager "platforms;android-35" "build-tools;35.0.0"
-
-# Check ADB connectivity to host devices
-adb devices
-```
-
-### Expo/React Native Development
-```bash
 # Install dependencies
 npm install
 
-# Start Expo development server
-npx expo start --tunnel              # for remote access
-npx expo start                       # for local network
-
-# Optimized startup (recommended for containers)
+# Start Expo development server (recommended)
 EXPO_NO_MDNS=1 npx expo start --host=localhost
 
-# EAS Build (cloud builds)
-eas build --platform android
+# Alternative methods
+npx expo start --tunnel              # for remote access over internet
+npx expo start                       # for local network discovery
 ```
 
-### Gradle Builds (for native Android projects)
-```bash
-# Build debug APK
-./gradlew assembleDebug
-
-# Install to connected device
-adb install app/build/outputs/apk/debug/app-debug.apk
+### App Structure
+```
+hello-world/                    # Main Expo application
+├── App.js                      # Root React component
+├── app.json                    # Expo configuration
+├── package.json                # Dependencies (Expo SDK ~52.0.0)
+└── assets/                     # App icons, splash screens
+    ├── icon.png
+    ├── splash-icon.png
+    └── adaptive-icon.png
 ```
 
 ## Prerequisites and Setup
 
 ### Host System Requirements
-- Docker Desktop with Rosetta 2 enabled (on Apple Silicon)
-- Android Studio with SDK and AVD (emulator) installed on host
-- Optionally: Expo Go app on physical device
+- Docker Desktop
+- **Expo Go app** installed on your mobile device (iOS App Store / Google Play)
+- Mobile device on same network as development container
 
 ### Initial Setup
-1. Copy `.devcontainer/` folder to project root
-2. Open project in VS Code with "Dev Containers: Reopen in Container"
-3. Wait for automatic Android SDK installation and Claude Code CLI installation
-4. Verify ADB connectivity with `adb devices`
+1. Open project in VS Code with "Dev Containers: Reopen in Container"
+2. Wait for container startup and Expo CLI installation  
+3. Navigate to `hello-world` directory
+4. Run `EXPO_NO_MDNS=1 npx expo start --host=localhost`
+5. Scan QR code with Expo Go app
 
 ## Troubleshooting
 
-### Architecture Issues
-- This container runs AMD64 on Apple Silicon via Rosetta for maximum Android SDK compatibility
-- All Android SDK tools should work without architecture-related crashes
-- If experiencing performance issues, consider using the ARM64 version for non-Gradle tasks
+### Expo Go Connection Issues
+- **Recommended approach**: Use `EXPO_NO_MDNS=1 npx expo start --host=localhost`  
+- **Why**: Disables mDNS discovery, ensures reliable connection
+- **Alternative**: Use `--tunnel` for remote access over internet
+- **Network**: Ensure mobile device and container are on same network
 
-### ADB Connection Issues
-- Ensure host ADB server is running: `adb kill-server && adb start-server` (on host)
-- Check firewall isn't blocking port 5037
-- Verify container can reach host: `ping host.docker.internal`
+### Common Issues
+- **"Couldn't connect to development server"**: Check network connectivity, try `--tunnel` flag
+- **QR code not working**: Manually type the displayed URL into Expo Go app
+- **Hot reload not working**: Restart Expo server, check for JavaScript errors
 
-### Expo/Metro Connection Issues
-- **Recommended approach**: Use `EXPO_NO_MDNS=1 npx expo start --host=localhost`
-- **Why**: Disables mDNS discovery, reduces "ghost" detection attempts
-- **Alternative**: Use `--tunnel` for external network access
-- **ADB reverse**: Container relies on `adb reverse` for device connectivity (preferred over network discovery)
-
-### SDK Issues
-- SDK components are installed to `/opt/android-sdk` via Docker volume `android-sdk-amd64`
-- If SDK is corrupted, remove volume: `docker volume rm android-sdk-amd64`
-- Re-run container to trigger fresh SDK installation
-
-### Git Authentication
-- GitHub token stored in `.claude/github_token.txt` (excluded from git)
-- Remote configured with token authentication for seamless push/pull
-
-## File Structure
+### Workspace Structure
 ```
-.devcontainer/
-├─ devcontainer.json       # Container configuration with AMD64 platform
-├─ Dockerfile             # AMD64 Node.js, JDK, Android tools
-└─ scripts/
-   ├─ setup-android-sdk.sh # Android SDK installation
-   └─ adb-notes.sh        # ADB connectivity helper
+/workspaces/mravenci-chuva-android-amd64/
+├── hello-world/               # 📱 Main Expo Go application
+├── app design/               # 📋 Design requirements and mockups  
+├── .devcontainer/            # 🐳 Docker container configuration
+├── .claude/                  # 🤖 Claude Code settings
+├── CLAUDE.md                 # 📖 This documentation
+└── README.md                 # 📄 Project overview
 ```
 
-## AMD64 vs ARM64 Considerations
+### Files Purpose
+- **`hello-world/`**: Pure Expo application - no native code, runs in Expo Go
+- **`app design/`**: UI/UX specifications for future development
+- **`.devcontainer/`**: Development environment with Expo CLI pre-installed  
+- **Legacy removed**: All React Native native build files, Gradle configs, Android SDK artifacts
 
-**Use this AMD64 version when:**
-- Running Gradle builds (`./gradlew assembleDebug`)
-- Using Android SDK tools that don't support ARM64
-- Need maximum compatibility with Android development tools
+## Development Workflow
 
-**Use ARM64 version when:**
-- Only doing Expo/React Native development
-- Performance is more important than tool compatibility
-- Not using Gradle or native Android builds
+### Daily Development
+1. **Start Development Server**:
+   ```bash
+   cd hello-world
+   EXPO_NO_MDNS=1 npx expo start --host=localhost
+   ```
+
+2. **Connect Device**: Scan QR code with Expo Go app
+
+3. **Code & Test**: Edit `App.js`, changes appear instantly on device
+
+4. **Debug**: Use Chrome DevTools or Expo debugging tools
+
+### When to Use This Setup
+- **Perfect for**: Rapid prototyping, learning React Native, UI/UX testing
+- **Not suitable for**: Apps needing native modules, custom native code, or store deployment
+- **Next step**: When ready for production, use `expo eject` or EAS Build

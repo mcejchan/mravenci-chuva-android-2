@@ -1,7 +1,0 @@
-appId: host.exp.exponent
----
-# Basic Maestro test for Expo Go
-- launchApp
-- assertVisible: "Expo Go"
-- tapOn: "Continue"
-- assertVisible: "Home"
