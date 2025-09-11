@@ -15,7 +15,11 @@
     "react-native": "0.79.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@wdio/cli": "^9.19.2",
+    "appium": "^3.0.2",
+    "appium-uiautomator2-driver": "^5.0.1",
+    "webdriverio": "^9.19.2"
   },
   "private": true
 }

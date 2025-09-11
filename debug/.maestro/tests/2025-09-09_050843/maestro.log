@@ -1,0 +1,13 @@
+05:08:43.551 [ INFO] maestro.cli.report.TestDebugReporter.logSystemInfo: Debug output path: /workspaces/mravenci-chuva-android-amd64/./debug/.maestro/tests/2025-09-09_050843
+05:08:43.566 [ INFO] MAESTRO.logSystemInfo: ---- System Info ----
+05:08:43.674 [ INFO] MAESTRO.logSystemInfo: Maestro Version: 2.0.2
+05:08:43.681 [ INFO] MAESTRO.logSystemInfo: CI: Undefined
+05:08:43.682 [ INFO] MAESTRO.logSystemInfo: OS Name: Linux
+05:08:43.683 [ INFO] MAESTRO.logSystemInfo: OS Version: 6.10.14-linuxkit
+05:08:43.684 [ INFO] MAESTRO.logSystemInfo: Architecture: amd64
+05:08:43.697 [ INFO] MAESTRO.logSystemInfo: Java Version: 17
+05:08:43.733 [ INFO] MAESTRO.logSystemInfo: Xcode Version: null
+05:08:43.757 [ INFO] MAESTRO.logSystemInfo: Flutter Version: Undefined
+05:08:43.779 [ INFO] MAESTRO.logSystemInfo: Flutter Channel: Undefined
+05:08:43.781 [ INFO] MAESTRO.logSystemInfo: ---------------------
+05:08:46.192 [DEBUG] io.micrometer.common.util.internal.logging.InternalLoggerFactory.newDefaultFactory: Using SLF4J as the default logging framework
