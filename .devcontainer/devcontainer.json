@@ -5,6 +5,7 @@
     "context": "."
   },
   "runArgs": [
+    "--memory=12g",
     "--add-host=host.docker.internal:host-gateway"
   ],
   "remoteUser": "vscode",

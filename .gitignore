@@ -30,7 +30,23 @@ web-build/
 *.aab
 build/
 app/build/
+android/build/
+android/app/build/
+android/.gradle/
+android/local.properties
+
+# Gradle
+.gradle-local/
+**/build/
+gradle-wrapper.jar
 
 # Temporary files
 *.tmp
 *.temp
+*.log
+gradle-build.log
+development-build-progress-report.md
+gradle-build-analysis-report.md
+
+# Large APK files
+ExpoGo-*.apk
