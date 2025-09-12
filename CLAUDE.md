@@ -46,17 +46,35 @@ npx expo start --tunnel              # for remote access over internet
 npx expo start                       # for local network discovery
 ```
 
-### App Structure
+### Workspace Structure - IMPORTANT FOR CLAUDE CODE!
 ```
-hello-world/                    # Main Expo application
-├── App.js                      # Root React component
-├── app.json                    # Expo configuration
-├── package.json                # Dependencies (Expo SDK ~52.0.0)
-└── assets/                     # App icons, splash screens
-    ├── icon.png
-    ├── splash-icon.png
-    └── adaptive-icon.png
+/workspaces/mravenci-chuva-android-amd64/     # ROOT - Working directory
+├── hello-world/                             # Main Expo application directory 
+│   ├── android/                             # Android native build folder (after expo prebuild)
+│   │   ├── gradlew                         # Gradle wrapper script
+│   │   ├── build.gradle                    # Root Android build file
+│   │   ├── gradle.properties               # Gradle configuration
+│   │   ├── app/                            # Android app module
+│   │   │   ├── build.gradle                # App build configuration
+│   │   │   └── src/                        # Android native source
+│   │   └── gradle/                         # Gradle wrapper files
+│   ├── App.js                               # Root React component
+│   ├── app.json                            # Expo configuration
+│   ├── package.json                        # Dependencies (Expo SDK ~53.0.0)
+│   └── assets/                             # App icons, splash screens
+├── 01-development-build-progress-report.md   # Build reports (chronological)
+├── 02-gradle-build-analysis-report.md
+├── 03-gradle-build-breakthrough-report.md
+└── CLAUDE.md                               # This file
+
+CRITICAL PATHS FOR GRADLE BUILDS:
+- Current working directory: /workspaces/mravenci-chuva-android-amd64/hello-world/
+- Gradle wrapper: ./android/gradlew (run from hello-world/)
+- Android configs: ./android/build.gradle, ./android/gradle.properties
+- App module: ./android/app/build.gradle
 ```
+
+### App Structure (Expo)
 
 ## Prerequisites and Setup
 
@@ -101,6 +119,19 @@ hello-world/                    # Main Expo application
 - **`app design/`**: UI/UX specifications for future development
 - **`.devcontainer/`**: Development environment with Expo CLI pre-installed  
 - **Legacy removed**: All React Native native build files, Gradle configs, Android SDK artifacts
+
+## CRITICAL BUILD VERIFICATION RULE
+
+⚠️ **ALWAYS verify build results after every build command!**
+
+**After running any Gradle build (`./gradlew assembleDebug`, etc.):**
+
+1. **Check exit code**: `echo $?` - must be 0 for success
+2. **Find APK location**: `find android/ -name "*.apk" -type f -exec ls -la {} \;`
+3. **Check for errors**: `tail -50 build.log` and search for "FAILED", "ERROR", "CompilationErrorException"
+4. **Verify APK was created**: Look in `android/app/build/outputs/apk/debug/`
+
+**If build shows exit code 0 but no APK exists = COMPILATION FAILED!**
 
 ## Development Workflow
 

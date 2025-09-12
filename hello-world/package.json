@@ -13,15 +13,10 @@
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-native": "0.79.5",
-    "expo-dev-client": "~5.2.4"
+    "@expo/config-plugins": "~10.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@wdio/cli": "^9.19.2",
-    "appium": "^3.0.2",
-    "appium-uiautomator2-driver": "^5.0.1",
-    "expo-dev-client": "^6.0.11",
-    "webdriverio": "^9.19.2"
+    "@babel/core": "^7.20.0"
   },
   "private": true
 }
