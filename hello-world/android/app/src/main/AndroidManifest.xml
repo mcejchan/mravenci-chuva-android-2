@@ -25,6 +25,7 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="helloworld"/>
+        <data android:scheme="exp+hello-world"/>
       </intent-filter>
     </activity>
   </application>
