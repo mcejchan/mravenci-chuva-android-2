@@ -117,7 +117,8 @@ CRITICAL PATHS FOR GRADLE BUILDS:
 ### Files Purpose
 - **`hello-world/`**: Pure Expo application - no native code, runs in Expo Go
 - **`app design/`**: UI/UX specifications for future development
-- **`.devcontainer/`**: Development environment with Expo CLI pre-installed  
+- **`.devcontainer/`**: Development environment with Expo CLI pre-installed
+- **`guide/`**: Tested and verified guide files for project workflows and procedures
 - **Legacy removed**: All React Native native build files, Gradle configs, Android SDK artifacts
 
 ## CRITICAL BUILD VERIFICATION RULE
@@ -132,6 +133,44 @@ CRITICAL PATHS FOR GRADLE BUILDS:
 4. **Verify APK was created**: Look in `android/app/build/outputs/apk/debug/`
 
 **If build shows exit code 0 but no APK exists = COMPILATION FAILED!**
+
+## CRITICAL DEPLOYMENT LOG ANALYSIS RULE
+
+⚠️ **ALWAYS analyze logs after every deployment for errors!**
+
+**After any deployment (Metro bundler, dev server, app launch):**
+
+1. **Check Metro bundler logs**: Look for bundle success/failure, module count, warnings
+2. **Check ADB/device logs**: `adb logcat -s ReactNativeJS:V -t 20` for JavaScript errors
+3. **Check network connectivity**: Verify manifest and bundle endpoints are accessible
+4. **Search for error patterns**: "FAILED", "ERROR", "Exception", "Global was not installed"
+5. **Verify successful connection**: Look for successful module bundling and dev-client initialization
+6. **Take emulator screenshot**: Capture current app state for visual verification
+7. **Analyze screenshot**: Check for error screens, loading states, successful app launch
+
+**Critical log patterns to watch:**
+- Bundle completion: `"Bundled XXXms index.js (### modules)"`
+- Network errors: Connection refused, timeout, unreachable
+- JavaScript errors: ReferenceError, TypeError, missing imports
+- Dev-client errors: "Global was not installed", initialization failures
+
+**Screenshot analysis checklist:**
+- App successfully loaded vs error screens
+- Dev-client launcher vs main app content
+- Network connectivity indicators
+- Any visible JavaScript errors or warnings
+
+## GUIDE FILES REFERENCE
+
+⚠️ **ALWAYS reference verified guide files before implementing complex workflows!**
+
+**Location**: `/guide/` directory contains tested and verified procedures:
+
+- **`expo-development-build-guide.md`**: Complete development build workflow from Expo Go to native APK
+- **`expo-complete-troubleshooting-guide.md`**: Comprehensive troubleshooting procedures for common issues
+- **`07-expert-bom-complete-guide.md`**: Expert BOM (Bill of Materials) approach for SDK compatibility
+
+**Usage**: These guides contain step-by-step procedures that have been tested and validated. Always consult them before implementing new features or resolving complex issues.
 
 ## Development Workflow
 
