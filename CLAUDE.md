@@ -160,6 +160,54 @@ CRITICAL PATHS FOR GRADLE BUILDS:
 - Network connectivity indicators
 - Any visible JavaScript errors or warnings
 
+## CRITICAL PROCESS MONITORING SYSTEM
+
+⚠️ **ALWAYS use monitored build scripts for long-running processes!**
+
+**Monitoring System Components:**
+
+### 1. Monitored Build Scripts (PREFERRED)
+- **`expert-development-build-monitored.sh`**: Development builds with Metro (45min timeout, 60s reports)
+- **`expert-bundled-build-monitored.sh`**: Bundled builds standalone (30min timeout, 30s reports)
+- **Auto-delegating**: Scripts automatically use monitoring wrapper if available
+- **Progress reporting**: Regular memory usage and elapsed time reports
+- **Zombie cleanup**: Automatic process cleanup and exit code capture
+
+
+### 3. Monitoring Utilities
+- **`monitoring-wrapper.sh`**: Core monitoring wrapper with progress reports and cleanup
+- **`process-monitor.sh`**: Process management utility for active monitoring
+
+**Package.json Scripts:**
+```bash
+cd hello-world
+
+# Monitored builds with progress tracking
+npm run build:devclient        # → expert-development-build-monitored.sh
+npm run build:bundled          # → expert-bundled-build-monitored.sh
+
+# Process monitoring utilities
+npm run monitor list           # List active processes
+npm run monitor status NAME    # Check process status
+npm run monitor logs NAME -f   # Follow process logs
+npm run monitor watch          # Real-time dashboard
+npm run monitor cleanup        # Clean completed processes
+```
+
+**Monitoring Features:**
+- **Progress Reports**: Memory usage, elapsed time, build phase indicators
+- **Completion Detection**: Automatic detection of process completion with exit codes
+- **Log Management**: Structured logging in `/tmp/monitoring-logs/`
+- **Timeout Protection**: Configurable timeouts prevent runaway processes
+- **Zombie Cleanup**: Automatic cleanup of failed/stuck processes
+- **Real-time Dashboard**: Live monitoring of all active processes
+
+**ALWAYS prefer monitored versions for:**
+- Development builds (30-45 minute duration)
+- Bundled builds (15-30 minute duration)
+- Any Gradle/CMake compilation tasks
+- Long-running background processes
+
 ## GUIDE FILES REFERENCE
 
 ⚠️ **ALWAYS reference verified guide files before implementing complex workflows!**
@@ -191,3 +239,32 @@ CRITICAL PATHS FOR GRADLE BUILDS:
 - **Perfect for**: Rapid prototyping, learning React Native, UI/UX testing
 - **Not suitable for**: Apps needing native modules, custom native code, or store deployment
 - **Next step**: When ready for production, use `expo eject` or EAS Build
+
+## CRITICAL EMULATOR VERIFICATION RULE
+
+⚠️ **ALWAYS take and analyze emulator screenshot after app installation!**
+
+**After any app installation on emulator (`npm run install:qa`, `adb install`, etc.):**
+
+1. **Take emulator screenshot**: Use ADB screencap to capture current screen state
+2. **Analyze screenshot visually**: Check for successful app launch vs error screens
+3. **Verify installation success**: Look for main app content, not error messages or crash dialogs
+4. **Document any issues**: If app shows errors, loading screens, or crashes, investigate further
+
+**Screenshot command:**
+```bash
+env ADB_SERVER_SOCKET=tcp:host.docker.internal:5037 adb -s emulator-5554 exec-out screencap -p > emulator-screenshot.png
+```
+
+**Critical analysis checklist:**
+- App successfully loaded vs error screens
+- Main app content visible vs loading/splash screens only
+- No visible JavaScript errors or crash dialogs
+- App responds to touch vs frozen/unresponsive state
+- Bundled content loads vs "Metro server required" errors
+
+**If screenshot shows issues:**
+- Check ADB logcat for error messages
+- Verify APK contains bundled JavaScript
+- Check app permissions and installation status
+- Investigate network connectivity requirements
