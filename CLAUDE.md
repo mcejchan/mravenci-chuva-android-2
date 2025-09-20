@@ -268,3 +268,4 @@ env ADB_SERVER_SOCKET=tcp:host.docker.internal:5037 adb -s emulator-5554 exec-ou
 - Verify APK contains bundled JavaScript
 - Check app permissions and installation status
 - Investigate network connectivity requirements
+- vždy, když děláš build, prebuild nebo install, pužívej .sh skripty. Ostaní metody nejso spolehlivé.
